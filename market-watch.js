@@ -1,7 +1,8 @@
 /*
- * @Name: tehran stock
- * @Date: 2021-01-01
+ * @Name: tehran-stock-market-watch-nodejs
  * @Author: Max Base
+ * @Date: 2021-01-01
+ * @Repository: https://github.com/BaseMax/tehran-stock-market-watch-nodejs/
  */
 
 const fs = require('fs')
