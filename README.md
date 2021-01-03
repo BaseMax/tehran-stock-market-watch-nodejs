@@ -5,7 +5,7 @@ A node js-based script to obtain live data of Tehran stock and watching market's
 ### Similar Repository
 
 - https://github.com/BaseMax/tehran-stock-market-watch-php
-- https://github.com/BaseMax/tehran-stock-market-watch-go
+- https://github.com/BaseMax/tehran-stock-market-watch-golang
 
 ---------
 
