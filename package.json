@@ -1,8 +1,8 @@
 {
   "name": "tehran-stock-market-watch-nodejs",
   "version": "1.0.0",
-  "description": "Iran Tehran Stock Bot",
-  "main": "market.js",
+  "description": "A node js-based script to obtain live data of Tehran stock and watching market's symbols.",
+  "main": "market-watch.js",
   "scripts": {
     "start": "node market-watch.js"
   },
