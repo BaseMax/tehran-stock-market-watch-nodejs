@@ -52,3 +52,12 @@ const getDbConnection = () => {
   //   database:   process.env.DB_NAME
   // })
 }
+
+const intval = (str) => {
+  return parseInt(str)
+}
+
+const floatval = (str) => {
+  return parseFloat(str)
+}
+
