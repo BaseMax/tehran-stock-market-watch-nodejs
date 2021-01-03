@@ -94,3 +94,74 @@ const parseItem = (cols) => {
   info['eps'] = cols[14]
   return info
 }
+
+(async () => {
+  console.log('Connecting to database')
+
+  const pool = await getDbConnection()
+  // const connection = await pool.getConnection()
+  console.log('Connected to MySQL database')
+
+  console.log('Start app')
+
+  console.log('Get response from tsetmc website')
+  await axios.get('http://www.tsetmc.com/tsev2/data/MarketWatchInit.aspx?h=0&r=0').then(async (resp) => {
+    let data = resp.data
+    console.log('Response: '+ data.length)
+    console.log(data)
+    let content = data.split('@')
+    if(content[2]) {
+      let items = content[2].split(';')
+      // for(let i=0; i < 1; i++) {
+      // items.forEach(async function(itemCurrent) {
+      for(let i=0; i < items.length; i++) {
+        let cols = items[i].split(',')
+        // let cols = itemCurrent.split(',')
+        // console.log(cols)
+        let item = parseItem(cols)
+        if(item == undefined) {
+          return
+        }
+
+        // console.log(item)
+        const count = await pool.query('SELECT COUNT(id) as count from `symbol` WHERE code=?', [item['code']])
+        // console.log(count[0][0].count)
+
+        if(count[0][0] == [] || count[0][0].count == 0) {
+          await pool.query(
+            'INSERT INTO `symbol` SET symbol=?, name=?, code=?, ins=?',
+            [item['symbol'], item['name'], item['code'], item['ins']]
+          )
+        }
+        const result = await pool.query('SELECT * from `symbol` WHERE `code`=? LIMIT 1', [item['code']])
+        let symbolID = result[0][0].id
+        console.log(symbolID)
+
+        await pool.query('INSERT INTO `history` SET symbol_id=?, time=?, count_all=?, volume_all=?, price_all=?, price_yesterday_last=?, price_today_first=?, price_now=?, price_max=?, price_min=?, price_close=?, eps=?',
+          [
+            symbolID,
+            Math.floor(new Date().getTime() / 1000),
+            item['count_all'],
+            item['volume_all'],
+            item['price_all'],
+            item['price_yesterday_last'],
+            item['price_today_first'],
+            item['price_now'],
+            item['price_max'] != '' ? item['price_max'] : null,
+            item['price_min'] != '' ? item['price_min'] : null,
+            item['price_close'] != '' ? item['price_close'] : null,
+            item['eps'] != '' ? item['eps'] : null
+          ]
+        )
+
+      })
+    }
+  })
+
+  console.log('Close database connection')
+  // await connection.release()
+  // await pool.releaseConnection()
+  pool.end()
+
+  console.log('End app')
+})()
