@@ -1,1 +1,34 @@
-
+{
+  "name": "tehran-stock-market-watch-nodejs",
+  "version": "1.0.0",
+  "description": "Iran Tehran Stock Bot",
+  "main": "market.js",
+  "scripts": {
+    "start": "node market-watch.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basemax/tehran-stock-market-watch-nodejs.git"
+  },
+  "keywords": [
+    "stock",
+    "price",
+    "rsi",
+    "ao",
+    "price"
+  ],
+  "author": "Max Base",
+  "license": "GPL3",
+  "bugs": {
+    "url": "https://github.com/basemax/tehran-stock-market-watch-nodejs/issues"
+  },
+  "homepage": "https://github.com/basemax/tehran-stock-market-watch-nodejs",
+  "devDependencies": {},
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "mysql2": "^2.2.5",
+    "promise-mysql": "^5.0.1"
+  }
+}
